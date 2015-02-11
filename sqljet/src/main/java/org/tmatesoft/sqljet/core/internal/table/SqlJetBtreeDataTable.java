@@ -323,14 +323,8 @@ public class SqlJetBtreeDataTable extends SqlJetBtreeTable implements ISqlJetBtr
                 throw new SqlJetException(SqlJetErrorCode.ERROR);
             final Object rowIdParam = row[primaryKeyColumnNumber];
             if (null != rowIdParam) {
-                if (rowIdParam instanceof Long) {
-                    long rowId = (Long) rowIdParam;
-                    if (rowId > 0) {
-                        return rowId;
-                    } else {
-                        throw new SqlJetException(SqlJetErrorCode.MISUSE,
-                                "INTEGER PRIMARY KEY column must be more than zero");
-                    }
+                if (rowIdParam instanceof Number) {
+                    return ((Number) rowIdParam).longValue();
                 } else {
                     throw new SqlJetException(SqlJetErrorCode.MISUSE,
                             "INTEGER PRIMARY KEY column must have only integer value");
